@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {Box, Card, CircularProgress, Grid} from '@material-ui/core';
 import UsersTable from './UsersTable/UsersTable';
 import useStyles from './UsersTable/UsersTableStyles';
