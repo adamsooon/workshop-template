@@ -1,11 +1,10 @@
-import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@material-ui/core';
-import {List} from 'immutable';
+import {Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@material-ui/core';
 import {useState} from 'react';
+import PropTypes from 'prop-types';
 
 
 function UsersTable(){
-    const [users, setUsers] = useState([1, 2]);
-
+  const [users, setUsers] = useState([1, 2]);
   return (
     <TableContainer>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -21,7 +20,7 @@ function UsersTable(){
             <TableBody>
               {users.map((row) => (
                 <TableRow
-                  key={row.name}
+                  key='1'
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell>row.name</TableCell>

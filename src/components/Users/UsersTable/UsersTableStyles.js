@@ -10,6 +10,13 @@ export default makeStyles(theme => ({
     marginRight: '20px',
     marginBottom: '150px',
   },
+  filters: {
+    marginTop: '50px',
+    marginLeft: '20px',
+    marginRight: '20px',
+    marginBottom: '20',
+    display: 'flex'
+  },
   header: {
     marginBottom: theme.spacing(2),
   },
