@@ -1,8 +1,9 @@
-import {Box, Card, Grid} from '@material-ui/core';
+import {Box, Card, CircularProgress, Grid} from '@material-ui/core';
 import UsersTable from './UsersTable/UsersTable';
 import useStyles from './UsersTable/UsersTableStyles';
 import CustomSelect from './CustomSelect';
-import {useCallback, useState} from 'react';
+import {useEffect, useState} from 'react';
+import ContactsApi from '../../api/contactApi';
 
 function Users(){
   const classes = useStyles();
@@ -15,16 +16,27 @@ function Users(){
   const handleSetNationality = selectedNationality => {
     setNationality(selectedNationality);
   }
-
+  const [users, setUsers] = useState([]);
   const genders = [
     {'key': '', 'value': 'All genders'},
-    {'key': 'Male', 'value': 'Male'},
-    {'key': 'Female', 'value': 'Female'},
+    {'key': 'male', 'value': 'Male'},
+    {'key': 'female', 'value': 'Female'},
   ]
   const [gender, setGender] = useState('');
   const handleSetGender = selectedGender => {
     setGender(selectedGender);
   }
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    ContactsApi(nationality, gender).then(
+      response => setUsers(response.data.results)
+    ).finally(
+      setIsLoading(false)
+    )
+  }, [nationality, gender]);
 
   return (
     <Box className={classes.wrapper}>
@@ -35,7 +47,7 @@ function Users(){
           </Grid>
           <Grid item md={12}>
             <Card className={classes.table}>
-              <UsersTable/>
+              {isLoading ? <CircularProgress /> : <UsersTable users={users}/>}
             </Card>
           </Grid>
         </Grid>

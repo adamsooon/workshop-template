@@ -1,10 +1,8 @@
-import {Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@material-ui/core';
-import {useState} from 'react';
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 
-function UsersTable(){
-  const [users, setUsers] = useState([1, 2]);
+function UsersTable({users}){
   return (
     <TableContainer>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -13,7 +11,7 @@ function UsersTable(){
                 <TableCell>Name</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Cell</TableCell>
-                <TableCell>Gebder</TableCell>
+                <TableCell>Gender</TableCell>
                 <TableCell>Nationality</TableCell>
               </TableRow>
             </TableHead>
@@ -23,11 +21,11 @@ function UsersTable(){
                   key='1'
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell>row.name</TableCell>
-                  <TableCell>row.calories</TableCell>
-                  <TableCell>row.fat</TableCell>
-                  <TableCell>row.carbs</TableCell>
-                  <TableCell >row.protein</TableCell>
+                  <TableCell>{row.firstname} {row.lastname}</TableCell>
+                  <TableCell>{row.email}</TableCell>
+                  <TableCell>{row.cell}</TableCell>
+                  <TableCell>{row.gender}</TableCell>
+                  <TableCell >{row.nat}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -35,4 +33,7 @@ function UsersTable(){
         </TableContainer>
   )
 }
+UsersTable.propTypes = {
+  users: PropTypes.array.isRequired,
+};
 export default UsersTable;
