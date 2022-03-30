@@ -1,41 +1,74 @@
-import logo from './logo.svg';
 import './App.css';
-import Button from "@material-ui/core/Button";
 import { useEffect, useState } from "react";
+import UsersTable from "./components/usersTable/usersTable";
+import {Box, FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
+import ContactsApi from "./api/contactApi";
+
+// const users = [{
+//   name: "John",
+//   email: "example@example.com",
+//   cell: "wtf",
+//   gender: "n/a",
+//   nationality: "earth",
+// }]
 
 function App() {
-  const [counter, setCounter] = useState(0);
-  const handleIncrement = () => {
-    setCounter(counter => counter + 1);
-  }
-  useEffect(() => {
-    const interval = window.setInterval(handleIncrement, 5000);
+  const [filterNationality, setFilterNationality] = useState('');
+  const [filterGender, setFilterGender] = useState('');
+  const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const handleSetFilterNationality = (e) => {
+    setFilterNationality(e.target.value);
+  };
+  const handleSetFilterGender = (e) => {
+    setFilterGender(e.target.value)
+  };
 
-    return () => window.clearInterval(interval);
-  }, [counter]);
+  useEffect(() => {
+    setIsLoading(true);
+    ContactsApi(filterNationality, filterGender)
+      .then(( data ) => {
+        setUsers(data.data.results);
+        setIsLoading(false);
+      })
+
+    return () => {};
+  }, [filterNationality, filterGender]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          {counter}
-        </p>
-        <Button
-            variant="outlined"
-            color="primary"
-            onClick={handleIncrement}
-        >
-          increment
-        </Button>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Box>
+        { isLoading ? "Loader visible" : "Loader not visible" }
+      </Box>
+      <Box style={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        }}
+      >
+        <FormControl colSpan={6} fullWidth>
+          <InputLabel variant="standard">Nationality</InputLabel>
+          <Select
+            defaultValue={''}
+            onChange={handleSetFilterNationality}
+          >
+            <MenuItem value={'us'}>USA</MenuItem>
+            <MenuItem value={'gb'}>Great Britain</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl colSpan={6} fullWidth>
+          <InputLabel variant="standard">Gender</InputLabel>
+          <Select
+            defaultValue={''}
+            onChange={handleSetFilterGender}
+          >
+            <MenuItem value={'male'}>Male</MenuItem>
+            <MenuItem value={'female'}>Female</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+      <UsersTable users={users}/>
     </div>
   );
 }
