@@ -1,7 +1,7 @@
 import './App.css';
 import { useEffect, useState } from "react";
 import UsersTable from "./components/usersTable/usersTable";
-import {Box, FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
+import {Box, CircularProgress, FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
 import ContactsApi from "./api/contactApi";
 
 // const users = [{
@@ -37,9 +37,7 @@ function App() {
 
   return (
     <div className="App">
-      <Box>
-        { isLoading ? "Loader visible" : "Loader not visible" }
-      </Box>
+      { isLoading ? <CircularProgress/>  : <Box/> }
       <Box style={{
         display: 'flex',
         flexDirection: 'row',
