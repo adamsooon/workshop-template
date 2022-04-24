@@ -5,6 +5,6 @@ const ContactsApiInstance = axios.create({
   });
 
 const ContactsApi = (nat='', gender='') =>
-ContactsApiInstance.get(`?format=json&results=20&inc=name,picture,email,cell,gender,nat&nat=${nat}&gender=${gender}`);
+    ContactsApiInstance.get(`?format=json&results=20&inc=name,picture,email,cell,gender,nat&nat=${nat}&gender=${gender}`)
 
 export default ContactsApi;
